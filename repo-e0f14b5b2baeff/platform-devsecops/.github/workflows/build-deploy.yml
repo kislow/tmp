@@ -1,0 +1,65 @@
+name: Build & Deploy Platform Components
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "Dockerfile"
+  workflow_dispatch:
+
+env:
+  AWS_REGION: me-central-1
+  ECR_REGISTRY: 123456789012.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+  IMAGE_NAME: emirates-devsecops
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧾 Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 🧩 Lint YAML, Bash, Dockerfiles
+        run: |
+          yamllint .
+          shellcheck scripts/*.sh || true
+          hadolint Dockerfile
+
+      - name: 🧱 Build & Tag Docker image
+        run: |
+          TAG=${GITHUB_SHA::7}
+          docker build -t $ECR_REGISTRY/$IMAGE_NAME:$TAG .
+
+      - name: 🛡️ Scan image (Trivy)
+        run: |
+          trivy image --exit-code 1 $ECR_REGISTRY/$IMAGE_NAME:$TAG
+
+      - name: 🔐 Sign image (Cosign)
+        run: |
+          cosign sign --key ${{ secrets.COSIGN_KEY }} $ECR_REGISTRY/$IMAGE_NAME:$TAG
+
+      - name: 🚀 Push to Amazon ECR
+        run: |
+          aws ecr get-login-password --region $AWS_REGION | \
+            docker login --username AWS --password-stdin $ECR_REGISTRY
+          docker push $ECR_REGISTRY/$IMAGE_NAME:$TAG
+
+      - name: 🔄 Update GitOps manifests (ArgoCD)
+        uses: actions/checkout@v4
+        with:
+          repository: emirates/platform-gitops
+          token: ${{ secrets.GITOPS_PAT }}
+          path: gitops
+
+      - name: 🧾 Bump image tag in GitOps repo
+        working-directory: gitops/clusters/prod/monitoring/
+        run: |
+          yq -i '.image.tag = env.TAG' values.yaml
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@emirates.com"
+          git commit -am "Update $IMAGE_NAME to $TAG" || echo "No changes"
+          git push
+        env:
+          TAG: ${GITHUB_SHA::7}

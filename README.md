@@ -1,2 +1,3 @@
 # tmp
-some random boilerplate stuff
+
+Random repositories for testing purposes

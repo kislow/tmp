@@ -1,0 +1,35 @@
+name: Provision Infrastructure (Terraform)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "infra/**.tf"
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: infra
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: 🔍 Init, Validate & Plan
+        run: |
+          terraform init -backend-config="region=me-central-1"
+          terraform fmt -check
+          terraform validate
+          terraform plan -input=false -var-file=prod.tfvars
+
+      - name: 🛡️ Security Scan
+        run: tfsec .
+
+      - name: 🚀 Apply (manual trigger only)
+        if: github.event_name == 'workflow_dispatch'
+        run: terraform apply -auto-approve -var-file=prod.tfvars

@@ -1,0 +1,9 @@
+groups:
+- name: booking-sla
+  rules:
+  - alert: HighLatency
+    expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="booking"}[5m])) > 0.5
+    for: 2m
+    labels: { severity: critical }
+    annotations:
+      summary: "Booking API latency above 500ms (95th percentile)"

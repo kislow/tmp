@@ -1,0 +1,3 @@
+# clusters/dev/monitoring/kustomization.yaml
+resources:
+  - ../../../apps/monitoring-stack/overlays/dev
