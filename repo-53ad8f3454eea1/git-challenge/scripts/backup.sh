@@ -18,8 +18,8 @@
 
 
 set -u
-
 BACKUP_DIR="/var/tmp/myapp-backup"
+echo "Checking Backup directory exists: $BACKUP_DIR"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 
 echo "Starting backup to $BACKUP_DIR..."
