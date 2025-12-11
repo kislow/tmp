@@ -16,7 +16,7 @@
 # Keep the changes small and simple.
 # ================================================================
 
-
+set -e
 set -u
 
 BACKUP_DIR="/var/tmp/myapp-backup"
