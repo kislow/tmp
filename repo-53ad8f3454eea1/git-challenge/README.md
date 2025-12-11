@@ -1,6 +1,6 @@
 # Merging – Bash Tools Challenge
 
-This repo contains 3 small Bash tools. Your mission:
+This repo contains 5 small Bash tools. Your mission:
 - Create your branch
 - Make overlapping edits in ALL files
 - Merge everything
@@ -8,11 +8,9 @@ This repo contains 3 small Bash tools. Your mission:
 
 ---
 
-## TEAM CHANGES (ALL PARTICIPANTS MUST EDIT THIS SECTION)
+## TEAM CHANGES (ALL PARTICIPANTS MUST EDIT ALL FILES)
 
-- Participant 1: Describe your edits to all 3 scripts
-- Participant 2: Describe your edits to all 3 scripts
-- Participant 3: Describe your edits to all 3 scripts
+[TASK for today!!!](./TASK.md)
 
 ---
 
@@ -27,4 +25,3 @@ This repo contains 3 small Bash tools. Your mission:
 ## Testing locally before pushing for a merge (Pull request)
 
 - test your changes locally or an environment to ensure your changes work as expected.
----

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bn/bash
 
 # Cleanup Script
 # Removes temporary directories and stale log files.
@@ -9,12 +9,16 @@ LOG_DIR="/var/tmp/myapp-logs"
 # ================================================================
 # WORK AREA – ALL PARTICIPANTS EDIT THIS BLOCK
 #
-# P1: Add a timestamp echo + comment update
-# P2: Add a log() function + update the header section
-# P3: Improve safety: add checks, modify same echo lines
+# P1: Add a timestamp echo + update the header comment
+# P2: Add a simple log() function + modify one echo line
+# P3: Add safety checks before deleting directories
+# P4: Add a line that prints how many files will be deleted
+# P5: Add a final summary line (e.g., "Cleanup completed at ...")
 #
-# All edits overlap intentionally.
+# Everyone will modify the SAME AREA → merge conflicts guaranteed.
+# Keep your changes small and simple.
 # ================================================================
+
 
 echo "Cleaning up..."
 echo "Removing $TMP_DIR and $LOG_DIR ..."

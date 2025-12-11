@@ -26,6 +26,8 @@ cd <repo>
 - Participant 1 → `feature-p1`
 - Participant 2 → `feature-p2`
 - Participant 3 → `feature-p3`
+- Participant 4 → `feature-p4`
+- Participant 5 → `feature-p5`
 
 ---
 
@@ -34,9 +36,11 @@ cd <repo>
 - `scripts/backup.sh`
 - `scripts/cleanup.sh`
 - `scripts/report.sh`
+- `scripts/healthcheck.sh`
+- `scripts/rotate_logs.sh`
 - `README.md`
 
-Each participant must apply **different edits** to each file.
+**NOTE:** Each participant must apply **different edits** to each file.
 
 ---
 
@@ -52,11 +56,10 @@ Each participant must apply **different edits** to each file.
 - Add a short description of what you changed
 - Assign it to another participant for review
 
-All 3 participants must:
+All 5 participants must:
 
 - Create their own PR
-- Optional: Review at least one other participant’s PR
-- Approve it
+- Optional: Approve PR (Each PR requires 2 Approvers)
 
 ---
 
@@ -67,7 +70,7 @@ Each merge will create conflicts — this is the challenge.
 
 In GitHub/GitLab:
 
-1. Open MR → Click *Merge*
+1. Open PR → Click *Merge*
 2. When conflicts appear → *Resolve conflicts*
 3. Combine everyone’s changes cleanly
 4. Commit the conflict resolution
@@ -89,9 +92,11 @@ git pull
 bash scripts/backup.sh
 bash scripts/cleanup.sh
 bash scripts/report.sh
+bash scripts/healthcheck.sh
+bash scripts/rotate_logs.sh
 ```
 
-Scripts must run cleanly after merging all 3 participants' changes.
+Scripts must run cleanly after merging all 5 participants' changes.
 
 ---
 
@@ -99,9 +104,8 @@ Scripts must run cleanly after merging all 3 participants' changes.
 
 You are DONE when:
 
-- All 3 merge requests are merged into `main`
+- All 5 merge requests are merged into `main`
 - All merge conflicts were resolved correctly
 - Final scripts contain **everyone’s contributions**
 - No conflict markers remain (`<<<<<<<`, `=======`, `>>>>>>>`)
 - All scripts run successfully
-- README includes updates from all 3 participants

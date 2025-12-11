@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 
 # Backup Script
 # Creates a timestamped backup directory and copies sample files.
@@ -9,8 +9,13 @@
 # P1: Update the header comment + change BACKUP_DIR value
 # P2: Add 'set -e' and change BACKUP_DIR (different value)
 # P3: Add a logging line and also change BACKUP_DIR (different value)
+# P4: Add a line verifying that BACKUP_DIR exists (simple echo check)
+# P5: Add a final summary echo (e.g., "Backup finished at ...")
+#
+# Everyone edits the SAME AREA → merge conflicts guaranteed.
+# Keep the changes small and simple.
 # ================================================================
-# NOTE: This WILL cause merge conflicts. That’s intentional.
+
 
 set -u
 
