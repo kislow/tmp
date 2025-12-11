@@ -29,3 +29,5 @@ touch "example.txt"
 cp example.txt "$BACKUP_DIR/backup-$TIMESTAMP.txt"
 
 echo "Backup completed successfully!"
+
+echo "Backup finished at $TIMESTAMP"
