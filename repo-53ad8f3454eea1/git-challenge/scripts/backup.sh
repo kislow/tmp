@@ -21,11 +21,14 @@ set -u
 
 BACKUP_DIR="/var/tmp/myapp-backup"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
+LOG_FILE="/var/log/myapp/backup.log"
 
-echo "Starting backup to $BACKUP_DIR..."
+mkdir -p "$(dirname "$LOG_FILE")"
+
+echo "$(date +%Y-%m-%d_%H-%M-%S) -Starting backup to $BACKUP_DIR..." | tee -a "$LOG_FILE"
 
 mkdir -p "$BACKUP_DIR"
 touch "example.txt"
 cp example.txt "$BACKUP_DIR/backup-$TIMESTAMP.txt"
 
-echo "Backup completed successfully!"
+echo "Backup completed successfully to $BACKUP_DIR/backup-$TIMESTAMP.txt" | tee -a "$LOG_FILE"
