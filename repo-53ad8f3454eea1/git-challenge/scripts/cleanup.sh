@@ -29,5 +29,4 @@ rm -f "$LOG_DIR"/*.log 2>/dev/null
 echo "Cleanup done."
 
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-
 echo "Cleanup completed at $TIMESTAMP"
