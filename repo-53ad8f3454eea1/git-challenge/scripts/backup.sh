@@ -19,10 +19,10 @@
 
 set -u
 
-BACKUP_DIR="/var/tmp/myapp-backup"
+BACKUP_DIR="/var/opt/eid-backup"
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
 
-echo "Starting backup to $BACKUP_DIR..."
+echo "Starting backup to $BACKUP_DIR - eid"
 
 mkdir -p "$BACKUP_DIR"
 touch "example.txt"
