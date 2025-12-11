@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 # Backup Script
 # Creates a timestamped backup directory and copies sample files.
@@ -25,10 +25,10 @@ LOG_FILE="/var/log/myapp/backup.log"
 
 mkdir -p "$(dirname "$LOG_FILE")"
 
-echo "$(date +%Y-%m-%d_%H-%M-%S) -Starting backup to $BACKUP_DIR..." | tee -a "$LOG_FILE"
+echo "$(date +%Y-%m-%d_%H-%M-%S) - Starting backup to $BACKUP_DIR..." | tee -a "$LOG_FILE"
 
 mkdir -p "$BACKUP_DIR"
 touch "example.txt"
 cp example.txt "$BACKUP_DIR/backup-$TIMESTAMP.txt"
 
-echo "Backup completed successfully to $BACKUP_DIR/backup-$TIMESTAMP.txt" | tee -a "$LOG_FILE"
+echo "$(date +%Y-%m-%d_%H:%M:%S) - Backup completed successfully to $BACKUP_DIR/backup-$TIMESTAMP.txt" | tee -a "$LOG_FILE"
