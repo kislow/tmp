@@ -1,3 +1,3 @@
-# tmp
+# /tmp
 
-Random repositories for testing purposes
+/tmp repositories for testing purposes
