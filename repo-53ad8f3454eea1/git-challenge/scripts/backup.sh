@@ -19,9 +19,18 @@
 
 set -u
 BACKUP_DIR="/var/tmp/myapp-backup"
-echo "Checking Backup directory exists: $BACKUP_DIR"
+
+if [ ! -d "$BACKUP_DIR" ]; then
+echo "Back up dir not found. Create: $BACKUP_DIR"
+else 
+echo "Directory already exists"
+
+fi
+
+echo "Directory is created: $BACKUP_DIR"
+
 TIMESTAMP=$(date +%Y-%m-%d_%H-%M-%S)
-LOG_FILE="/var/log/myapp/backup.log"
+LOG_FILE="BACKUP_DIR/backup.log"
 
 mkdir -p "$(dirname "$LOG_FILE")"
 
