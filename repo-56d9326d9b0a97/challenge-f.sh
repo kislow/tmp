@@ -10,6 +10,8 @@ USERS_FILE="data/users.txt"
 
 echo "Processing users..."
 
+cat " " > $OUTPUT_FILE
+
 cat $USERS_FILE >> $OUTPUT_FILE
 
 echo "Processing logs..."
