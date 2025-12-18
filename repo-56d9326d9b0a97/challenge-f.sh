@@ -3,6 +3,7 @@
 # challenge-m.sh
 # Purpose: Process application logs and user data
 
+set -euo pipefail
 LOG_FILE="logs/app.log"
 OUTPUT_FILE="logs/processed.log"
 USERS_FILE="data/users.txt"
