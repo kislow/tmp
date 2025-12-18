@@ -13,3 +13,30 @@ echo "Starting male challenge backup..."
 cp $SOURCE_FILE $BACKUP_DIR/$BACKUP_FILE
 
 echo "Backup completed"
+
+
+
+# log rotation setup
+LOG_FILE="logs/app.log"
+MAX_LOG_SIZE=1000000  # in bytes
+if [ -f $LOG_FILE ]; then
+    LOG_SIZE=$(stat -c%s "$LOG_FILE")
+    if [ $LOG_SIZE -ge $MAX_LOG_SIZE ]; then
+        mv $LOG_FILE "${LOG_FILE}.1"
+        touch $LOG_FILE
+        echo "Log rotated: ${LOG_FILE} -> ${LOG_FILE}.1"
+    fi
+fi
+echo "Log rotation check completed."
+
+# Keeping last 3 logs
+if [ -f "${LOG_FILE}.3" ]; then
+    rm "${LOG_FILE}.3"
+fi
+if [ -f "${LOG_FILE}.2" ]; then
+    mv "${LOG_FILE}.2" "${LOG_FILE}.3"
+fi
+if [ -f "${LOG_FILE}.1" ]; then
+    mv "${LOG_FILE}.1" "${LOG_FILE}.2"
+fi
+echo "Log retention management completed."
