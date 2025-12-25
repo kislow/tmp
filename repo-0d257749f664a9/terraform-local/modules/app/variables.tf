@@ -1,3 +1,8 @@
+variable "name" {
+  type        = string
+  description = "Container name"
+}
+
 variable "image" {
   description = "Container image"
   type        = string
@@ -13,6 +18,7 @@ variable "database_url" {
 variable "internal_port" {
   type        = number
   description = "DECIDE ON PORT FOR THE APPS 🙂‍↔️"
+  default     = 3000
 }
 
 variable "external_port" {
