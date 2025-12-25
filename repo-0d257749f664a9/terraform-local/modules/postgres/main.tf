@@ -9,8 +9,8 @@ resource "docker_container" "this" {
   ]
 
   ports {
-    internal = var.port
-    external = 5432
+    internal = 5432
+    external = var.port
   }
 
   restart = "unless-stopped"
