@@ -1,0 +1,191 @@
+DEBUG & FIX TERRAFORM
+===========================
+
+This is NOT a greenfield Terraform task.
+
+You are given a BROKEN Terraform project that:
+- Initializes
+- Looks like it works
+- But is badly designed
+
+Your job is to DEBUG and FIX it.
+
+------------------------------------
+SCENARIO
+------------------------------------
+
+You joined a team where Terraform was written in a hurry.
+
+It "works", but:
+- Nobody trusts it
+- Nobody can scale it
+- Nobody wants to touch it
+
+You must clean it up WITHOUT rewriting everything from scratch.
+
+------------------------------------
+WHAT THE INFRA MUST DO
+------------------------------------
+
+After fixing the Terraform code, it must:
+
+1. Create 1 PostgreSQL container
+2. Create 2 application containers (nginx)
+3. Both applications must connect to the SAME database
+4. Database connection must be passed via Terraform outputs
+
+------------------------------------
+IMPORTANT RULES
+------------------------------------
+
+❌ Do NOT create any resources in the root module
+❌ Do NOT hardcode names, ports, or passwords
+❌ Do NOT duplicate module blocks
+❌ Do NOT use `count`
+
+✅ Use Terraform modules
+✅ Use `for_each`
+✅ Use variables, locals, and outputs for wiring
+
+------------------------------------
+WHAT IS BROKEN (ON PURPOSE)
+------------------------------------
+
+The project contains several problems:
+
+- Resources exist in the root module
+- Values are hardcoded
+- Modules are copy-pasted
+- Database connection strings are manually written
+- Sensitive values are exposed in plain text
+- Terraform does not scale cleanly
+
+Your task is to FIX these issues.
+
+------------------------------------
+WHAT YOU MUST CHANGE
+------------------------------------
+
+You must refactor the existing code so that:
+
+1. Root module contains ONLY:
+   - module blocks
+   - variables
+   - outputs
+
+2. Applications are created using:
+   - ONE app module
+   - ONE module block
+   - for_each
+
+3. The database module:
+   - Does NOT hardcode credentials or ports
+   - Exposes its connection details via outputs
+
+4. Applications:
+   - Receive database connection info from Terraform outputs
+   - Do NOT define connection strings themselves
+
+------------------------------------
+LOCAL VALUES REQUIREMENT
+------------------------------------
+
+Database connection strings MUST be built using Terraform locals.
+
+Rules:
+- The database module is responsible for constructing the connection string
+- Applications must receive a ready-to-use value
+- Applications must NOT assemble or modify the connection string
+
+If connection string logic exists in more than one place,
+the task is NOT complete.
+
+------------------------------------
+SENSITIVE DATA REQUIREMENT
+------------------------------------
+
+Database passwords must be treated as sensitive.
+
+You must:
+- Mark database password variables as sensitive
+- Mark any outputs that expose sensitive values as sensitive
+
+Sensitive values must NOT appear in:
+- terraform plan output
+- terraform output (plain text)
+
+------------------------------------
+SCALING REQUIREMENT
+------------------------------------
+
+This MUST be possible:
+
+apps = {
+  app1 = {}
+  app2 = {}
+  app3 = {}
+}
+
+WITHOUT:
+- adding new module blocks
+- duplicating code
+- changing Terraform logic
+
+------------------------------------
+WHAT MUST WORK
+------------------------------------
+
+1. terraform init
+2. terraform plan
+   - 1 database
+   - 2 applications
+3. terraform apply
+   - all containers start successfully
+4. terraform destroy
+   - everything is removed cleanly
+
+------------------------------------
+HOW TO VERIFY
+------------------------------------
+
+1. Verify containers:
+   docker ps
+
+Expected:
+- 1x postgres
+- 2x nginx
+
+2. Verify app environment variables:
+   docker exec -it app1 env | grep DATABASE_URL
+
+Expected:
+DATABASE_URL=postgresql://...
+
+3. Verify sensitive handling:
+   terraform output
+
+Sensitive values should be hidden.
+
+4. Add a third app
+   - Change ONLY variables
+   - Re-run terraform plan
+   - Terraform should show +1 app
+
+------------------------------------
+SUCCESS CRITERIA
+------------------------------------
+
+If you had to change Terraform logic
+to add a new app,
+the task is NOT complete.
+
+If you only changed variables,
+you did it correctly.
+
+------------------------------------
+FINAL NOTE
+------------------------------------
+
+"If Terraform feels fragile, it was designed poorly."
+
+Your job is to fix the design.
